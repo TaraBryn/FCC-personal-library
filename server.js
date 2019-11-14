@@ -20,7 +20,7 @@ app.use(helmet({
   hidePoweredBy: {setTo: 'PHP 4.2.0'}
 }))
 
-MongoClient.connect(process.env.DB, {useUnifiedTopology: true}, function(err, db) {
+MongoClient.connect(process.env.DB, {useUnifiedTopology: true}, function(err, client) {
   
   app.use('/public', express.static(process.cwd() + '/public'));
 
@@ -36,7 +36,7 @@ MongoClient.connect(process.env.DB, {useUnifiedTopology: true}, function(err, db
   });
   
   //Routing for API 
-  apiRoutes(app, db);  
+  apiRoutes(app, client.db('Books')); 
 
   //404 Not Found Middleware
   app.use(function(req, res, next) {
