@@ -23,6 +23,7 @@ module.exports = function (app, db) {
     .post(function (req, res){
       var title = req.body.title;
       //response will contain new book object including atleast _id and title
+    
     })
     
     .delete(function(req, res){
