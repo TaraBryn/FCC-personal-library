@@ -60,8 +60,8 @@ module.exports = function (app, db) {
     //json res format same as .get
     db.collection('books').findAndModify(
       {_id: ObjectId(bookid)}, {},
-      {update: {'$push': {comments: comment}}},
-      (err, doc) => res.json(err || doc)
+      {'$push': {comments: comment}}, {new: true},
+      (err, doc) => res.json(err || doc.value)
     )
   })
 
