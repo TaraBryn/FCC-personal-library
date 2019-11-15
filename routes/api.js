@@ -18,16 +18,16 @@ module.exports = function (app, db) {
   .get(function (req, res){
     //response will be array of book objects
     //json res format: [{"_id": bookid, "title": book_title, "commentcount": num_of_comments },...]
-    return db.collection('books').find().toArray()
+    var result;
+    db.collection('books').find().toArray()
     .then(data => {
-      var result = data.map(e => {
+      res.json(data.map(e => {
         return {
           _id: e._id,
           title: e.title,
           commentcount: e.comments.length
         }
-      })
-      return result;
+      }))
     })
   })
 
