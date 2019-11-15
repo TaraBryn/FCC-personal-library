@@ -16,20 +16,25 @@ app.use(helmet({
   hsts: {force: true},
   contentSecurityPolicy: {directives: {
     defaultSrc: ["'self'"],
-    imgSrc: ["'self'", 'https://hyperdev.com/'],
+    imgSrc: ["'self'", 'https://hyperdev.com/', 'https://cdn.gomix.com/', 'http://glitch.com/'],
+    scriptSrc: ["'self'", "'unsafe-inline'", 'https://code.jquery.com/'],
     styleSrc: ["'self'", "'unsafe-inline'"]
   }},
   hidePoweredBy: {setTo: 'PHP 4.2.0'}
-}))
+}));
+
+app.use('/public', express.static(process.cwd() + '/public'));
+
+app.use(cors({origin: '*'})); //USED FOR FCC TESTING PURPOSES ONLY!
+
+
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 MongoClient.connect(process.env.DB, {useUnifiedTopology: true}, function(err, client) {
   
-  app.use('/public', express.static(process.cwd() + '/public'));
-
-  app.use(cors({origin: '*'})); //USED FOR FCC TESTING PURPOSES ONLY!
-
-  app.use(bodyParser.json());
-  app.use(bodyParser.urlencoded({ extended: true }));
+  
 
   //Index page (static HTML)
   app.route('/')

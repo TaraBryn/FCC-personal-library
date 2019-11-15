@@ -50,6 +50,10 @@ module.exports = function (app, db) {
   .get(function (req, res){
     var bookid = req.params.id;
     //json res format: {"_id": bookid, "title": book_title, "comments": [comment,comment,...]}
+    db.collection('books').find({_id: req.params.id})
+    .toArray().then(function(data){
+      
+    })
   })
 
   .post(function(req, res){
