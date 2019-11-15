@@ -36,7 +36,7 @@ MongoClient.connect(process.env.DB, {useUnifiedTopology: true}, function(err, cl
   });
   
   //Routing for API 
-  apiRoutes(app, client.db('Books')); 
+  apiRoutes(app, client.db('personal_library')); 
 
   //404 Not Found Middleware
   app.use(function(req, res, next) {

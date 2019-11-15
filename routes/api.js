@@ -18,12 +18,26 @@ module.exports = function (app, db) {
   .get(function (req, res){
     //response will be array of book objects
     //json res format: [{"_id": bookid, "title": book_title, "commentcount": num_of_comments },...]
+    db.collection('books').find({}, (err, docs)=>{
+      if (err) return res.json(err);
+      return docs;
+    })
+    .toArray()
+    .then(data => {
+      res.json(data.map(e => {
+        return {
+          _id: e._id,
+          title: e.title,
+          commentcount: e.comments.length
+        }
+      }))
+    })
   })
 
   .post(function (req, res){
     var title = req.body.title;
     //response will contain new book object including atleast _id and title
-    db.collection('books').insertOne({title},(err, data) => {
+    db.collection('books').insertOne({title, comments: []},(err, data) => {
       if (err) return res.json(err);
       res.json(data.ops[0]);
     });
