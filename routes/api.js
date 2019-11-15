@@ -42,7 +42,7 @@ module.exports = function (app, db) {
 
   .delete(function(req, res){
     //if successful response will be 'complete delete successful'
-    
+    db.collection('books').remove({},{}, e => res.json(e || 'complete delete successful'))
   });
 
 
