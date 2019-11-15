@@ -67,8 +67,9 @@ module.exports = function (app, db) {
   })
 
   .delete(function(req, res){
-    var bookid = req.params.id;
+    var bookid = ObjectId(req.params.id);
     //if successful response will be 'delete successful'
+    db.collection('books').remove({_id: bookid},{}, e => res.json(e || 'complete delete successful'))
   });
   
 };
