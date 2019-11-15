@@ -42,10 +42,11 @@ module.exports = function (app, db) {
 
   .delete(function(req, res){
     //if successful response will be 'complete delete successful'
-    db.collection('books').deleteMany({},{}).then((e) => {
-      
-      res.send('complete delete successful');
-    })
+    try {
+      db.collection('books')
+      .deleteMany({},{})
+      .then((e) => res.send('complete delete successful'));
+    } catch(e) {res.json(e)}
   });
 
 
@@ -54,8 +55,11 @@ module.exports = function (app, db) {
   .get(function (req, res){
     var bookid = req.params.id;
     //json res format: {"_id": bookid, "title": book_title, "comments": [comment,comment,...]}
-    db.collection('books').find({_id: ObjectId(req.params.id)})
-    .toArray().then(data=>res.json(data));
+    try {
+      db.collection('books')
+      .find({_id: ObjectId(req.params.id)})
+      .toArray().then(data=>res.json(data));
+    } catch(err){res.json(err);}
   })
 
   .post(function(req, res){
