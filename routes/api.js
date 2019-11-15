@@ -18,15 +18,16 @@ module.exports = function (app, db) {
   .get(function (req, res){
     //response will be array of book objects
     //json res format: [{"_id": bookid, "title": book_title, "commentcount": num_of_comments },...]
-    db.collection('books').find().toArray()
+    return db.collection('books').find().toArray()
     .then(data => {
-      res.json(data.map(e => {
+      var result = data.map(e => {
         return {
           _id: e._id,
           title: e.title,
           commentcount: e.comments.length
         }
-      }))
+      })
+      return result;
     })
   })
 
@@ -68,8 +69,8 @@ module.exports = function (app, db) {
   .delete(function(req, res){
     var bookid = req.params.id;
     //if successful response will be 'delete successful'
-    console.log(bookid)
-    try{db.collection('books').deleteOne({_id: ObjectId(bookid)})}
+    console.log(ObjectId(bookid))
+    try{db.collection('books').deleteOne({_id: ObjectId(bookid)}).then(result=>console.log(result.deletedCount))}
     catch(e){console.log(e);}
   });
   
