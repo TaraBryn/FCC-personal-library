@@ -18,12 +18,10 @@ module.exports = function (app, db) {
   .get(function (req, res){
     //response will be array of book objects
     //json res format: [{"_id": bookid, "title": book_title, "commentcount": num_of_comments },...]
-    db.collection('books').find({}, (err, docs)=>{
-      if (err) return res.json(err);
-      return docs;
-    })
+    db.collection('books').findOne((err, docs)=> err ? res.json(err) : docs)
     .toArray()
     .then(data => {
+      console.log(data);
       res.json(data.map(e => {
         return {
           _id: e._id,
