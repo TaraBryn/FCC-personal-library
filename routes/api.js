@@ -20,7 +20,6 @@ module.exports = function (app, db) {
     //json res format: [{"_id": bookid, "title": book_title, "commentcount": num_of_comments },...]
     db.collection('books').find().toArray()
     .then(data => {
-      console.log(data);
       res.json(data.map(e => {
         return {
           _id: e._id,
@@ -69,6 +68,7 @@ module.exports = function (app, db) {
   .delete(function(req, res){
     var bookid = ObjectId(req.params.id);
     //if successful response will be 'delete successful'
+    console.log('test')
     db.collection('books').remove({_id: bookid},{}, e => res.json(e || 'complete delete successful'))
   });
   

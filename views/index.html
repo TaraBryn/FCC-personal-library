@@ -51,7 +51,8 @@
       </form>
       <form id="deleteTest" action="" method="delete" class="border">
         <h4>Delete a single book</h4>
-        <input type="text" name="id" id="deletetestid" value="" />
+        <input type="text" name="id" id="deletetestid" value="" placeholder="bookid"/>
+        <input type="submit" value="submit"/>
       </form>
     </div>
     <hr style='margin: 50px'>
@@ -83,6 +84,10 @@
          var id = $('#idinputtest').val();
          $(this).attr('action', "/api/books/" + id);
        });
+        $('deleteTest').submit(function(){
+          var id = $('#deletetestid').val();
+          $(this).attr('action', '/api/books/' + id);
+        })
       });
    </script>
   </body>
