@@ -15,7 +15,9 @@ var app = express();
 app.use(helmet({
   hsts: {force: true},
   contentSecurityPolicy: {directives: {
-    defaultSrc: ["'self'"]
+    defaultSrc: ["'self'"],
+    imgSrc: ["'self'", 'https://hyperdev.com/'],
+    styleSrc: ["'self'", "'unsafe-inline'"]
   }},
   hidePoweredBy: {setTo: 'PHP 4.2.0'}
 }))
