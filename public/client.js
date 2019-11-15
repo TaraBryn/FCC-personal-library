@@ -82,4 +82,12 @@ $( document ).ready(function() {
     });
   }); 
   
+  $('#delete_test_submit').click(function(){
+    $.ajax({
+      url: '/api/books/' + $('#delete_test_id'),
+      type: 'delete',
+      success: ()=>{}
+    })
+  })
+  
 });
