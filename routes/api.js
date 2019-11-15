@@ -18,7 +18,7 @@ module.exports = function (app, db) {
   .get(function (req, res){
     //response will be array of book objects
     //json res format: [{"_id": bookid, "title": book_title, "commentcount": num_of_comments },...]
-    db.collection('books').findOne((err, docs)=> err ? res.json(err) : docs)
+    db.collection('books').find((err, docs)=> err ? res.json(err) : docs)
     .toArray()
     .then(data => {
       console.log(data);
