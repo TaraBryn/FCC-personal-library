@@ -41,7 +41,7 @@ module.exports = function (app, db) {
 
   .delete(function(req, res){
     //if successful response will be 'complete delete successful'
-    db.collection('books').remove({},{}, e => res.json(e || 'complete delete successful'))
+    db.collection('books').deleteMany({},{}, e => e? res.json(e) : res.send('complete delete successful'))
   });
 
 
@@ -66,10 +66,11 @@ module.exports = function (app, db) {
   })
 
   .delete(function(req, res){
-    var bookid = ObjectId(req.params.id);
+    var bookid = req.params.id;
     //if successful response will be 'delete successful'
-    console.log('test')
-    db.collection('books').remove({_id: bookid},{}, e => res.json(e || 'complete delete successful'))
+    console.log(bookid)
+    try{db.collection('books').deleteOne({_id: ObjectId(bookid)})}
+    catch(e){console.log(e);}
   });
   
 };
