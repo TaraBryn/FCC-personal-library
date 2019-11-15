@@ -50,16 +50,19 @@ module.exports = function (app, db) {
   .get(function (req, res){
     var bookid = req.params.id;
     //json res format: {"_id": bookid, "title": book_title, "comments": [comment,comment,...]}
-    db.collection('books').find({_id: req.params.id})
-    .toArray().then(function(data){
-      
-    })
+    db.collection('books').find({_id: ObjectId(req.params.id)})
+    .toArray().then(data=>res.json(data));
   })
 
   .post(function(req, res){
     var bookid = req.params.id;
     var comment = req.body.comment;
     //json res format same as .get
+    db.collection('books').findAndModify(
+      {_id: ObjectId(bookid)}, {},
+      {update: {'$push': {comments: comment}}},
+      (err, doc) => res.json(err || doc)
+    )
   })
 
   .delete(function(req, res){
