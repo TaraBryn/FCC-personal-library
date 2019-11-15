@@ -84,7 +84,7 @@ $( document ).ready(function() {
   
   $('#delete_test_submit').click(function(){
     $.ajax({
-      url: '/api/books/' + $('#delete_test_id'),
+      url: '/api/books/' + $('#delete_test_id').val(),
       type: 'delete',
       success: ()=>{}
     })
