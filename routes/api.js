@@ -80,7 +80,7 @@ module.exports = function (app, db) {
     try{db.collection('books')
         .deleteOne({_id: ObjectId(bookid)})
         .then(result=>res.send(result.deletedCount == 0 ? 'invalid _id' : 'delete successful'))
-       } catch(e){res.json(e));}
+       } catch(e) {res.json(e);}
   });
   
 };
