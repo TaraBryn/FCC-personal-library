@@ -77,8 +77,10 @@ module.exports = function (app, db) {
     var bookid = req.params.id;
     //if successful response will be 'delete successful'
     console.log(ObjectId(bookid))
-    try{db.collection('books').deleteOne({_id: ObjectId(bookid)}).then(result=>result.deletedCount == 0 ? res.json}
-    catch(e){console.log(e);}
+    try{db.collection('books')
+        .deleteOne({_id: ObjectId(bookid)})
+        .then(result=>res.send(result.deletedCount == 0 ? 'invalid _id' : 'delete successful'))
+       } catch(e){res.json(e));}
   });
   
 };
